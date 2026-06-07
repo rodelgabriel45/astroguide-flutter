@@ -1,13 +1,13 @@
 class Horoscope {
-  final String love;
-  final String career;
-  final String health;
-  final String luckyNumber;
+  final String date;
+  final String period;
+  final String sign;
+  final String horoscope;
 
   const Horoscope({
-    required this.love,
-    required this.career,
-    required this.health,
-    required this.luckyNumber,
+    required this.date,
+    required this.period,
+    required this.sign,
+    required this.horoscope,
   });
 }

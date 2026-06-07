@@ -2,7 +2,9 @@ import 'package:astrology_app/core/theme/app_theme.dart';
 import 'package:astrology_app/features/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   runApp(const MyApp());
 }
 

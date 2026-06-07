@@ -1,21 +1,17 @@
 import 'package:astrology_app/core/constants/app_colors.dart';
+import 'package:astrology_app/features/horoscope/data/datasources/horoscope_remote_datasource.dart';
+import 'package:astrology_app/features/horoscope/data/repositories/horoscope_repository.dart';
 import 'package:astrology_app/features/horoscope/entities/horoscope.dart';
 import 'package:astrology_app/features/widgets/horoscope_section_card.dart';
 import 'package:flutter/material.dart';
 import 'package:astrology_app/features/horoscope/entities/zodiac.dart';
-
-// final horoscope = {
-//   'love': 'A pleasant surprise awaits.',
-//   'career': 'Stay focused on priorities.',
-//   'health': 'Drink more water.',
-//   'luckyNumber': '7',
-// };
+import 'package:intl/intl.dart';
 
 const horoscope = Horoscope(
-  love: 'A pleasant surprise awaits.',
-  career: 'Stay focused on priorities.',
-  health: 'Drink more water.',
-  luckyNumber: '7',
+  date: '2026-06-07',
+  period: 'daily',
+  sign: 'Aries',
+  horoscope: 'A pleasant surprise awaits.',
 );
 
 class HoroscopeDetailsScreen extends StatelessWidget {
@@ -25,6 +21,8 @@ class HoroscopeDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final repository = HoroscopeRepository(HoroscopeRemoteDatasource());
+
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -79,33 +77,53 @@ class HoroscopeDetailsScreen extends StatelessWidget {
                         fontWeight: FontWeight.w600,
                       ),
                     ),
+
+                    const SizedBox(height: 16),
                   ],
                 ),
               ),
 
               SizedBox(height: 64),
 
-              HoroscopeSectionCard(title: 'Love ❤️', content: horoscope.love),
+              FutureBuilder(
+                future: repository.getDailyHoroscope(zodiac.name.toLowerCase()),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
 
-              SizedBox(height: 32),
+                  if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
+                  }
 
-              HoroscopeSectionCard(
-                title: 'Career 💼',
-                content: horoscope.career,
-              ),
+                  if (!snapshot.hasData) {
+                    return const Text('No Horoscope Available.');
+                  }
 
-              SizedBox(height: 32),
+                  final horoscope = snapshot.data!;
 
-              HoroscopeSectionCard(
-                title: 'Health 🌱',
-                content: horoscope.health,
-              ),
+                  final formattedDate = DateFormat(
+                    'MMMM d, yyyy',
+                  ).format(DateTime.parse(horoscope.date));
 
-              SizedBox(height: 32),
+                  return Column(
+                    children: [
+                      Center(
+                        child: Text(
+                          formattedDate,
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      ),
 
-              HoroscopeSectionCard(
-                title: 'Lucky Number',
-                content: horoscope.luckyNumber,
+                      const SizedBox(height: 16),
+
+                      HoroscopeSectionCard(
+                        title: 'Daily Horoscope 🔮',
+                        content: horoscope.horoscope,
+                      ),
+                    ],
+                  );
+                },
               ),
             ],
           ),
