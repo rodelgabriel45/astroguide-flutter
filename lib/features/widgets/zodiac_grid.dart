@@ -13,7 +13,7 @@ class ZodiacGrid extends StatelessWidget {
         crossAxisCount: 2,
         crossAxisSpacing: 12,
         mainAxisSpacing: 12,
-        childAspectRatio: 2,
+        childAspectRatio: 1.8,
       ),
       itemBuilder: (context, index) {
         return ZodiacCard(zodiac: zodiacs[index]);
