@@ -3,9 +3,11 @@ import 'package:astrology_app/features/horoscope/data/datasources/horoscope_remo
 import 'package:astrology_app/features/horoscope/data/repositories/horoscope_repository.dart';
 import 'package:astrology_app/features/horoscope/entities/horoscope.dart';
 import 'package:astrology_app/features/widgets/horoscope_section_card.dart';
+import 'package:astrology_app/providers/favorite_sign_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:astrology_app/features/horoscope/entities/zodiac.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 const horoscope = Horoscope(
   date: '2026-06-07',
@@ -22,6 +24,8 @@ class HoroscopeDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final repository = HoroscopeRepository(HoroscopeRemoteDatasource());
+    final favoriteSign = context.watch<FavoriteSignProvider>().favoriteSign;
+    final isFavorite = favoriteSign == zodiac;
 
     return Scaffold(
       body: SafeArea(
@@ -60,6 +64,7 @@ class HoroscopeDetailsScreen extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
+                        if (isFavorite) ...[SizedBox(width: 8), Text('⭐')],
                       ],
                     ),
 

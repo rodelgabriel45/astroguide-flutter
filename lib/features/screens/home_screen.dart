@@ -1,11 +1,10 @@
 import 'package:astrology_app/core/constants/app_colors.dart';
-import 'package:astrology_app/core/constants/zodiac_sign.dart';
-import 'package:astrology_app/features/horoscope/data/services/favorite_sign_service.dart';
-import 'package:astrology_app/features/horoscope/entities/zodiac.dart';
 import 'package:astrology_app/features/widgets/daily_energy_card.dart';
 import 'package:astrology_app/features/widgets/favorite_sign_card.dart';
 import 'package:astrology_app/features/widgets/zodiac_grid.dart';
+import 'package:astrology_app/providers/favorite_sign_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -15,10 +14,10 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  Zodiac? favoriteSign;
-
   @override
   Widget build(BuildContext context) {
+    final favoriteSign = context.watch<FavoriteSignProvider>().favoriteSign;
+
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -55,20 +54,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
               DailyEnergyCard(),
 
-              FutureBuilder<String?>(
-                future: FavoriteSignService().getFavoriteSign(),
-                builder: (context, snapshot) {
-                  if (!snapshot.hasData) {
-                    return const SizedBox();
-                  }
+              if (favoriteSign != null) ...[
+                const SizedBox(height: 24),
 
-                  final signName = snapshot.data;
-
-                  final zodiac = zodiacs.firstWhere((z) => z.name == signName);
-
-                  return FavoriteSignCard(zodiac: zodiac);
-                },
-              ),
+                FavoriteSignCard(zodiac: favoriteSign),
+              ],
 
               const SizedBox(height: 32),
 

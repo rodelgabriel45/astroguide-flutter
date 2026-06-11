@@ -1,8 +1,10 @@
 import 'package:astrology_app/core/constants/app_colors.dart';
 import 'package:astrology_app/features/horoscope/entities/zodiac.dart';
 import 'package:astrology_app/features/screens/horoscope_details_screen.dart';
+import 'package:astrology_app/providers/favorite_sign_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:astrology_app/features/horoscope/data/services/favorite_sign_service.dart';
+import 'package:provider/provider.dart';
 
 class ZodiacCard extends StatelessWidget {
   const ZodiacCard({super.key, required this.zodiac});
@@ -10,6 +12,9 @@ class ZodiacCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final favoriteSign = context.watch<FavoriteSignProvider>().favoriteSign;
+    final isFavorite = favoriteSign == zodiac;
+
     return Card(
       elevation: 0,
       color: AppColors.card,
@@ -47,6 +52,10 @@ class ZodiacCard extends StatelessWidget {
                   await FavoriteSignService().saveFavoriteSign(zodiac.name);
 
                   if (context.mounted) {
+                    context.read<FavoriteSignProvider>().setFavoriteSign(
+                      zodiac,
+                    );
+
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text('${zodiac.name} saved as Favorite'),
@@ -54,7 +63,9 @@ class ZodiacCard extends StatelessWidget {
                     );
                   }
                 },
-                icon: const Icon(Icons.star_border, size: 20),
+                icon: isFavorite
+                    ? const Text('⭐')
+                    : const Icon(Icons.star_border, size: 20),
               ),
             ],
           ),
