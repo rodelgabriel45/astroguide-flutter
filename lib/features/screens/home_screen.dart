@@ -1,4 +1,5 @@
 import 'package:astrology_app/core/constants/app_colors.dart';
+import 'package:astrology_app/features/screens/settings_screen.dart';
 import 'package:astrology_app/features/widgets/daily_energy_card.dart';
 import 'package:astrology_app/features/widgets/favorite_sign_card.dart';
 import 'package:astrology_app/features/widgets/zodiac_grid.dart';
@@ -25,26 +26,48 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 10),
-
-              Center(
-                child: Text(
-                  'AstroGuide',
-                  style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 2,
-                    color: AppColors.gold,
+              Stack(
+                children: [
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: IconButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SettingsScreen(),
+                          ),
+                        );
+                      },
+                      icon: Icon(Icons.settings),
+                    ),
                   ),
-                ),
+                ],
               ),
 
-              const SizedBox(height: 8),
+              const Column(
+                children: [
+                  Center(
+                    child: Text(
+                      'AstroGuide',
+                      style: TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 2,
+                        color: AppColors.gold,
+                      ),
+                    ),
+                  ),
 
-              Center(child: Text('Discover Your Stars')),
+                  SizedBox(height: 8),
+
+                  Center(child: Text('Discover Your Stars')),
+                ],
+              ),
 
               const SizedBox(height: 32),
 
+              // Cosmic Energy Card
               Text(
                 "Today's Cosmic Energy",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
@@ -54,11 +77,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
               DailyEnergyCard(),
 
-              if (favoriteSign != null) ...[
-                const SizedBox(height: 24),
+              const SizedBox(height: 24),
 
-                FavoriteSignCard(zodiac: favoriteSign),
-              ],
+              FavoriteSignCard(zodiac: favoriteSign),
 
               const SizedBox(height: 32),
 

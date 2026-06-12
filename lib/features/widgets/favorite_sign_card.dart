@@ -2,8 +2,8 @@ import 'package:astrology_app/features/horoscope/entities/zodiac.dart';
 import 'package:flutter/material.dart';
 
 class FavoriteSignCard extends StatelessWidget {
-  const FavoriteSignCard({super.key, required this.zodiac});
-  final Zodiac zodiac;
+  const FavoriteSignCard({super.key, this.zodiac});
+  final Zodiac? zodiac;
 
   @override
   Widget build(BuildContext context) {
@@ -22,13 +22,25 @@ class FavoriteSignCard extends StatelessWidget {
                     '⭐ Favorite Sign',
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                   ),
-                  Row(
-                    children: [
-                      Text(zodiac.symbol),
-                      const SizedBox(width: 8),
-                      Text(zodiac.name),
-                    ],
-                  ),
+
+                  const SizedBox(height: 16),
+
+                  if (zodiac == null)
+                    Row(
+                      children: [
+                        Icon(Icons.star_border, size: 18),
+                        const SizedBox(width: 8),
+                        Text('There is no favorite sign yet'),
+                      ],
+                    )
+                  else
+                    Row(
+                      children: [
+                        Text(zodiac!.symbol),
+                        const SizedBox(width: 8),
+                        Text(zodiac!.name),
+                      ],
+                    ),
                 ],
               ),
             ),

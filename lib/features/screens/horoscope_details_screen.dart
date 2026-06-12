@@ -1,4 +1,3 @@
-import 'package:astrology_app/core/constants/app_colors.dart';
 import 'package:astrology_app/features/horoscope/data/datasources/horoscope_remote_datasource.dart';
 import 'package:astrology_app/features/horoscope/data/repositories/horoscope_repository.dart';
 import 'package:astrology_app/features/horoscope/entities/horoscope.dart';
@@ -33,21 +32,7 @@ class HoroscopeDetailsScreen extends StatelessWidget {
           padding: EdgeInsets.all(20),
           child: ListView(
             children: [
-              Align(
-                alignment: Alignment.centerLeft,
-                child: InkWell(
-                  onTap: () => Navigator.pop(context),
-                  borderRadius: BorderRadius.circular(16),
-                  child: Container(
-                    padding: EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      color: AppColors.card,
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: const Icon(Icons.arrow_back_ios_new),
-                  ),
-                ),
-              ),
+              Align(alignment: Alignment.topLeft, child: BackButton()),
               // Header
               Center(
                 child: Column(

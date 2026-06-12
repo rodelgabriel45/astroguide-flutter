@@ -18,6 +18,14 @@ class FavoriteSignProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> deleteFavoriteSign() async {
+    await FavoriteSignService().clearFavoriteSign();
+
+    _favoriteSign = null;
+
+    notifyListeners();
+  }
+
   void setFavoriteSign(Zodiac zodiac) {
     _favoriteSign = zodiac;
 
