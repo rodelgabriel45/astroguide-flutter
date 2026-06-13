@@ -25,10 +25,10 @@ class ZodiacCard extends StatelessWidget {
       child: InkWell(
         borderRadius: BorderRadius.circular(20),
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 2, vertical: 8),
+          padding: EdgeInsets.symmetric(horizontal: 6, vertical: 8),
           child: Row(
             children: [
-              Text(zodiac.symbol, style: const TextStyle(fontSize: 28)),
+              Text(zodiac.symbol, style: const TextStyle(fontSize: 24)),
 
               const SizedBox(width: 12),
 
@@ -39,7 +39,10 @@ class ZodiacCard extends StatelessWidget {
                   children: [
                     Text(
                       zodiac.name,
-                      style: const TextStyle(fontWeight: FontWeight.w600),
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 13,
+                      ),
                     ),
                     const SizedBox(height: 2),
                     Text(zodiac.dateRange, style: TextStyle(fontSize: 12)),

@@ -65,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
 
-              const SizedBox(height: 32),
+              const SizedBox(height: 24),
 
               // Cosmic Energy Card
               Text(
@@ -77,11 +77,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
               DailyEnergyCard(),
 
-              const SizedBox(height: 24),
+              const SizedBox(height: 4),
 
               FavoriteSignCard(zodiac: favoriteSign),
 
-              const SizedBox(height: 32),
+              const SizedBox(height: 16),
 
               Text(
                 'Choose your sign',
